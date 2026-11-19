@@ -92,4 +92,64 @@ delete from projekt where id_projektu =1;
 alter table zadanie drop foreign key zadanie_ibfk_3;
 drop table sprint;
 
+-- lab04 --
+-- zadanie 1 --
+alter table zadanie drop foreign key zadanie_ibfk_1;
+alter table projekt drop foreign key projekt_ibfk_1;
+
+alter table pracownik modify id_pracownika int not null;
+alter table pracownik drop primary key;
+
+alter table pracownik modify id_pracownika int not null auto_increment;
+
+alter table zadanie 
+	add constraint fk_zadanie_pracownik
+		foreign key (pracownik) references pracownik(id_pracownika)
+        on delete set null;
+alter table projekt 
+	add constraint fk_menadzer_projektu
+		foreign key (menadzer_projektu) references pracownik(id_pracownika);
+
+-- zadanie 2 --
+alter table zadanie add column godziny_szacowanie integer default 8;
+
+update zadanie set godziny_szacowane = 4 where id_zadania=1;
+
+alter table zadanie alter column godziny_szacowane set default 6;
+
+insert into zadanie (nazwa_zadania) values
+('zadanie 2');
+ select * from zadanie;
+delete from zadanie where id_zadania=4;
+
+-- zadanie 3 --
+alter table projekt
+add column  opis_kratki varchar(50);
+
+alter table projekt  modify opis_kratki varchar(200);
+select * from projekt;
+update projekt set opis_kratki = 'MVP' where id_projektu = 2;
+
+alter table projekt drop column opis_kratki;
+
+-- zadanie 4 -- 
+
+alter table zadanie drop foreign key zadanie_ibfk_2;
+
+alter table zadanie 
+	add constraint fk_zadanie_projekt
+		foreign key (projekt) references projekt(id_projektu)
+        on delete set null;
+
+delete from projekt where id_projektu=2;
+select * from zadanie;
+ 
+
+
+
+
+
+
+
+
 
